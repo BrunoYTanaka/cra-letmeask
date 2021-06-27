@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import './styles.scss'
+import clx from 'classnames'
 
 type QuestionProps = {
   children?: ReactNode
@@ -8,11 +9,22 @@ type QuestionProps = {
     name: string
     avatar: string
   }
+  isHighlighted?: boolean,
+  isAnswered?: boolean
 }
-
-function Question({ author, content,children }: QuestionProps) {
+function Question({
+  author,
+  content,
+  children,
+  isAnswered = false,
+  isHighlighted = false,
+}: QuestionProps) {
   return (
-    <div className="question">
+    <div className={
+      clx('question',
+        { answered: isAnswered },
+        { highlighted: isHighlighted && !isAnswered }
+      )}>
       <p>{content}</p>
       <footer>
         <div className="user-info">

@@ -43,7 +43,7 @@ export const useRoom = (roomId: string) => {
 
     roomRef.on('value', room => {
       const databaseRoom = room.val()
-      const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {}
+      const firebaseQuestions: FirebaseQuestions = databaseRoom?.questions ?? {}
 
       const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
         return {
@@ -56,7 +56,7 @@ export const useRoom = (roomId: string) => {
           likeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
         }
       })
-      setTitle(databaseRoom.title)
+      setTitle(databaseRoom?.title || '')
       setQuestions(parsedQuestions)
     })
     return () => roomRef.off('value')
